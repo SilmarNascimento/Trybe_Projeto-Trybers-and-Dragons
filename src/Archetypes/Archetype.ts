@@ -13,7 +13,7 @@ export default abstract class Archetype {
 
   abstract get energyType(): EnergyType;
 
-  static createdArchetypesInstances(): number {
+  static createdArchetypeInstances(): number {
     throw new Error('Not implemented');
   }
 }
