@@ -11,28 +11,31 @@ export default class Character implements Fighter {
   private _defense: number;
   private _dexterity: number;
   private _energy?: Energy | undefined;
-  readonly name: string;
-  readonly race: Race;
-  readonly archetype: Archetype;
+  private _name: string;
+  private _race: Race;
+  private _archetype: Archetype;
 
-  constructor(
-    name: string,
-    dexterity: number,
-    race: Race,
-    archetype: Archetype,
-  ) {
-    this.name = name;
+  constructor(name: string) {
+    this._name = name;
     this._dexterity = getRandomInt(1, 10);
     this._strength = getRandomInt(1, 10);
     this._defense = getRandomInt(1, 10);
-    this.race = race ?? new Elf(name, dexterity);
-    this.archetype = archetype ?? new Mage(name);
-    this._maxLifePoints = this.race.maxLifePoints * 0.5;
+    this._race = new Elf(name, this._dexterity);
+    this._archetype = new Mage(name);
+    this._maxLifePoints = this._race.maxLifePoints * 0.5;
     this._lifePoints = this._maxLifePoints;
     this._energy = {
       type_: this.archetype.energyType,
       amount: getRandomInt(1, 10),
     };
+  }
+
+  get race(): Race {
+    return this._race;
+  }
+
+  get archetype(): Archetype {
+    return this._archetype;
   }
 
   get lifePoints(): number {
@@ -52,7 +55,7 @@ export default class Character implements Fighter {
   }
 
   get energy(): Energy | undefined {
-    return this._energy;
+    return Object.freeze(this._energy);
   }
 
   receiveDamage(attackPoints: number): number {
@@ -81,8 +84,8 @@ export default class Character implements Fighter {
       amount: 10,
     };
     this._maxLifePoints += getRandomInt(1, 10);
-    if (this._maxLifePoints > this.race.maxLifePoints) {
-      this._maxLifePoints = this.race.maxLifePoints;
+    if (this._maxLifePoints > this._race.maxLifePoints) {
+      this._maxLifePoints = this._race.maxLifePoints;
     }
     this._lifePoints = this._maxLifePoints;
   }
