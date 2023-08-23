@@ -10,7 +10,7 @@ export default class Character implements Fighter {
   private _strength: number;
   private _defense: number;
   private _dexterity: number;
-  private _energy?: Energy | undefined;
+  private _energy: Energy;
   private _name: string;
   private _race: Race;
   private _archetype: Archetype;
@@ -54,8 +54,8 @@ export default class Character implements Fighter {
     return this._dexterity;
   }
 
-  get energy(): Energy | undefined {
-    return Object.freeze(this._energy);
+  get energy(): Energy {
+    return { ...this._energy };
   }
 
   receiveDamage(attackPoints: number): number {
