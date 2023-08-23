@@ -1,10 +1,10 @@
-import Character from '../Character';
+import Fighter from '../Fighter';
 import Battle from './Battle';
 
 export default class PVP extends Battle {
-  private player02: Character;
+  private player02: Fighter;
 
-  constructor(player01: Character, player02: Character) {
+  constructor(player01: Fighter, player02: Fighter) {
     super(player01);
     this.player02 = player02;
   }
